@@ -88,7 +88,6 @@
     will-change: transform, opacity;
     transition: opacity var(--dialog-transition-duration) var(--dialog-transition-timing);
     position: relative;
-    transform: translateZ(0);
     max-height: calc(100% - var(--dialog-padding) * 2);
     min-height: 150px;
     display: flex;
@@ -107,6 +106,7 @@
 .dialog textarea {
     font-family: var(--dialog-font-family);
     font-size: var(--dialog-font-size);
+    transform: translateZ(0);
 }
 
 .dialog input,
@@ -210,7 +210,6 @@
     background-color: var(--dialog-button-bg);
     transition: none;
     color: var(--dialog-button-text);
-    transform: translateZ(0);
 }
 
 .dialog .dialog-button,

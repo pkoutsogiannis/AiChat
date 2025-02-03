@@ -150,7 +150,8 @@ define("CONFIG", [
 			],
 			"models"   => [
 				"meta-llama/Llama-3.3-70B-Instruct-Turbo",
-				"deepseek-ai/deepseek-llm-67b-chat"
+				"deepseek-ai/deepseek-llm-67b-chat",
+				"deepseek-ai/DeepSeek-R1-Distill-Llama-70B-free",
 			],
 		],
 		"lmstudio" => [

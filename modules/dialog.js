@@ -39,9 +39,9 @@ export class dialog {
 
     // Factory methods for creating common button configurations.
     static button = {
-        submit: (text = 'OK') => ({ text, buttonClass: this.buttonClass.submit }),
+        submit: (text = 'OK') => ({ text, cls: [this.buttonClass.submit] }),
         close: (text = 'Close') => this.button.submit(text),
-        cancel: (text = 'Cancel') => ({ text, buttonClass: this.buttonClass.cancel }),
+        cancel: (text = 'Cancel') => ({ text, cls: [this.buttonClass.cancel] }),
     };
 
     // Updates the dialog position to stay within overlay bounds.
@@ -214,14 +214,14 @@ export class dialog {
     // Creates a button element for the dialog.
     static createButton({
         id = '',
-        buttonClass = '',
+        cls = [],
         style = '',
         text = 'OK',
         onClick = null
     }) {
         id = id || crypto.randomUUID().toString();
         if (onClick) this.#buttonHandlers.set(id, onClick);
-        return `<button id="${id}" class="dialog-button ${buttonClass}" style="${style ? style : ''}">${this.escapeHtml(text)}</button>`;
+        return `<button id="${id}" class="dialog-button ${cls.join(' ')}" style="${style ? style : ''}">${this.escapeHtml(text)}</button>`;
     }
 
     // Creates a container with multiple buttons for the dialog.
