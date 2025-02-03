@@ -22,18 +22,10 @@ export class dialog {
     static POSTPONE = Symbol('postpone');
 
     // Predefined CSS classes for different types of dialog buttons.
-    static className = {
+    static buttonClass = {
         left: 'dialog-left',
         submit: 'dialog-submit',
         cancel: 'dialog-cancel',
-    }
-
-    // Icon content mapping using modern SVG icons
-    static #iconContent = {
-        success: '<svg viewBox="0 0 24 24"><path fill="currentColor" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>',
-        error: '<svg viewBox="0 0 24 24"><path fill="currentColor" d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>',
-        warning: '<svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 5.99L19.53 19H4.47L12 5.99M12 2L1 21h22L12 2zm1 14h-2v2h2v-2zm0-6h-2v4h2v-4z"/></svg>',
-        info: '<svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>'
     }
 
     // Icon CSS classes mapping
@@ -47,9 +39,9 @@ export class dialog {
 
     // Factory methods for creating common button configurations.
     static button = {
-        submit: (text = 'OK') => ({ text, className: this.className.submit }),
+        submit: (text = 'OK') => ({ text, buttonClass: this.buttonClass.submit }),
         close: (text = 'Close') => this.button.submit(text),
-        cancel: (text = 'Cancel') => ({ text, className: this.className.cancel }),
+        cancel: (text = 'Cancel') => ({ text, buttonClass: this.buttonClass.cancel }),
     };
 
     // Updates the dialog position to stay within overlay bounds.
@@ -222,14 +214,14 @@ export class dialog {
     // Creates a button element for the dialog.
     static createButton({
         id = '',
-        className = '',
+        buttonClass = '',
         style = '',
         text = 'OK',
         onClick = null
     }) {
         id = id || crypto.randomUUID().toString();
         if (onClick) this.#buttonHandlers.set(id, onClick);
-        return `<button id="${id}" class="dialog-button ${className}" style="${style ? style : ''}">${this.escapeHtml(text)}</button>`;
+        return `<button id="${id}" class="dialog-button ${buttonClass}" style="${style ? style : ''}">${this.escapeHtml(text)}</button>`;
     }
 
     // Creates a container with multiple buttons for the dialog.
@@ -397,17 +389,19 @@ export class dialog {
         let iconHtml = '';
 
         // Creates an icon element for the dialog
-        const createIcon = (iconClass, content) => {
-            if (!content) return '';
-            return `<div class="dialog-icon ${iconClass}">${content}</div>`;
+        const createIcon = (iconClass, customContent = '') => {
+            if (!iconClass) return '';
+            return `<div class="dialog-icon ${iconClass}">${customContent}</div>`;
         }
 
         if (iconClass) {
-            const content = iconClass === this.iconClass.custom
-                ? icon
-                : this.#iconContent[Object.keys(this.iconClass).find(key => this.iconClass[key] === iconClass) || ''] || '';
-            iconHtml = createIcon(iconClass, content);
+            if (iconClass === this.iconClass.custom && icon) {
+                iconHtml = createIcon(iconClass, icon);
+            } else {
+                iconHtml = createIcon(iconClass);
+            }
         }
+
         const contentHtml = `
             <div class="dialog-alert-content">
                 ${iconHtml}

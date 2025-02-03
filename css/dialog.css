@@ -260,49 +260,6 @@
     }
 }
 
-.dialog-icon-success {
-    color: #2e7d32;
-    background: linear-gradient(135deg, #43a047, #2e7d32);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
-.dialog-icon-error {
-    color: #c62828;
-    background: linear-gradient(135deg, #e53935, #c62828);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
-.dialog-icon-warning {
-    color: #ef6c00;
-    background: linear-gradient(135deg, #fb8c00, #ef6c00);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
-.dialog-icon-info {
-    color: #1565c0;
-    background: linear-gradient(135deg, #1e88e5, #1565c0);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
-.dialog-icon-custom {
-    color: #424242;
-}
-
-.dialog-message {
-    flex: 1;
-    line-height: 1.6;
-    font-size: 1.05em;
-}
-
-/* Alert dialog styles */
 .dialog-alert-content {
     display: flex;
     align-items: center;
@@ -311,21 +268,50 @@
 }
 
 .dialog-icon {
-    font-size: 48px;
-    min-width: 48px;
+    width: 48px;
     height: 48px;
-    flex-shrink: 0;
-    filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.2));
-    transition: transform 0.2s ease;
-    line-height: 40px;
-    font-weight: bold;
-    text-align: center;
+    display: block;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 48px;
 }
 
-.dialog-icon svg {
+/* Add this for custom icons */
+.dialog-icon-custom {
+    background-image: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #424242;
+}
+
+.dialog-icon-custom svg,
+.dialog-icon-custom img {
     width: 100%;
     height: 100%;
-    display: block;
+    object-fit: contain;
+}
+
+.dialog-icon-success {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%232e7d32' d='M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z'/%3E%3C/svg%3E");
+}
+
+.dialog-icon-error {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23c62828' d='M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z'/%3E%3C/svg%3E");
+}
+
+.dialog-icon-warning {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23ef6c00' d='M12 5.99L19.53 19H4.47L12 5.99M12 2L1 21h22L12 2zm1 14h-2v2h2v-2zm0-6h-2v4h2v-4z'/%3E%3C/svg%3E");
+}
+
+.dialog-icon-info {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%231565c0' d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z'/%3E%3C/svg%3E");
+}
+
+.dialog-message {
+    flex: 1;
+    line-height: 1.6;
+    font-size: 1.05em;
 }
 
 .dialog .dialog-loading-spinner {
