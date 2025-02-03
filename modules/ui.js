@@ -100,7 +100,7 @@ export const uiBindEvents = () => {
         dom.populateSelect(ui.modelSelect, providerConfig.models, {
             getValue: (model, modelIndex) => getModelName(model),
             getText: (model, modelIndex) => getModelName(model),
-            defValue: settings.model.get(provider, 0)
+            defValue: settings.model.get(provider, getModelName(providerConfig.models[0])),
         });
     });
 
