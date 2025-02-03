@@ -71,8 +71,8 @@ export const uiBindEvents = () => {
         // Populate the providers select element
         // dispatching a change event to trigger the population of the models select element
         dom.populateSelect(ui.providerSelect, settings.config.providers, {
-            getValue: ([providerKey]) => providerKey,
-            getText: ([, provider]) => provider.name,
+            getValue: ([key, value], index) => key,
+            getText: ([key, value], index) => value.name,
             defValue: settings.provider.get(Object.keys(settings.config.providers)[0]),
         });
     }).hook('change', (e) => {
@@ -88,7 +88,7 @@ export const uiBindEvents = () => {
         dom.show(ui.apikeyButton, !providerConfig.apikey);
 
         // Populate the models select element
-        // dispatching a change event to trigger a history fetch
+        // and dispatching a change event to trigger a history fetch
 
         const getModelName = (model) => {
             // If the model is a string, convert it to lowercase
@@ -98,8 +98,8 @@ export const uiBindEvents = () => {
         }
 
         dom.populateSelect(ui.modelSelect, providerConfig.models, {
-            getValue: (model, modelIndex) => getModelName(model),
-            getText: (model, modelIndex) => getModelName(model),
+            getValue: (item, index) => getModelName(item),
+            getText: (item, index) => getModelName(item),
             defValue: settings.model.get(provider, getModelName(providerConfig.models[0])),
         });
     });
