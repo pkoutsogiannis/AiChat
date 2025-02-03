@@ -1,0 +1,943 @@
+/*
+ * Copyright 2025 Periklis Koutsogiannis
+ *
+ * Licensed under the Apache License, Version 2.0
+ * 
+ * Original Project: AiChat
+ * Author: Periklis Koutsogiannis
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=block');
+
+/* ==================== */
+/* CSS Variables        */
+/* ==================== */
+:root {
+	/* Theme Colors */
+	--background-color: #ffffff;
+	/* White */
+	--background-color-footer: var(--background-color);
+	--background-color-message-assistant: #f0f0f0;
+	/* Light gray */
+	--background-color-file-preview: #e0e0e0;
+	/* Slightly darker gray */
+	--text-color: #000000;
+	/* Black */
+	--text-color-subtitle: #333333;
+	/* Dark gray */
+	--text-color-placeholder: #666666;
+	/* Medium gray */
+	--border-color: #cccccc;
+	/* Light gray */
+	--background-color-header: #000000;
+	/* Black */
+	--background-color-header-hover: #333333;
+	/* Dark gray */
+	--background-color-header-animation: white;
+	--focus-ring: rgba(0, 0, 0, 0.15);
+	/* Black with transparency */
+	--background-color-message-error: #f5f5f5;
+	/* Light gray */
+	--text-color-message-error: #b00000;
+	/* Dark red (kept for contrast) */
+	--background-color-code: #e0e0e0;
+	/* Light gray */
+	--text-color-code: #000000;
+	/* Black */
+	--text-color-file-remove: white;
+	--background-color-file-remove: #b00000;
+	/* Dark red (kept for contrast) */
+	--text-button: #ffffff;
+	/* White */
+	--background-color-button-disabled: #f0f0f0;
+	/* Light gray */
+	--text-color-button-red: #ffffff;
+	/* White */
+	--background-color-button-red: #b00000;
+	/* Dark red (kept for contrast) */
+	--background-color-button-red-hover: #8b0000;
+	/* Darker red */
+	--text-color-button-white: #000000;
+	/* Black */
+	--background-color-button-white: #e0e0e0;
+	/* Light gray */
+	--background-color-button-white-hover: #cccccc;
+	/* Slightly darker gray */
+	--text-color: #2d3748;
+	--text-color-header: white;
+	--shadow-dropdown: rgba(0, 0, 0, 0.1);
+	/* Black with transparency */
+
+	/* Base Typography */
+	--font-family: "Inter", Arial, -apple-system, BlinkMacSystemFont, sans-serif;
+	--font-family-code: "Jetbrains mono", monospace;
+
+	--font-size-title: 60px;
+
+	--font-size-base: 14px;
+	--font-size-code: calc(var(--font-size-base) - 1px);
+	--font-size-small: calc(var(--font-size-base) - 2px);
+	--font-size-small: calc(var(--font-size-base) - 2px);
+	--font-size-smaller: calc(var(--font-size-base) - 3px);
+	--font-size-large: calc(var(--font-size-base) + 6px);
+	--font-size-header: calc(var(--font-size-base) + 2px);
+	--line-height-base: 1.6em;
+	--line-height-input: var(--line-height-base);
+	--line-height-code: calc(var(--line-height-base) - 2px);
+	--line-height-heading: 1;
+
+	/* Select Elements Typography */
+	--select-size-provider: calc(var(--font-size-base) + 5px);
+	--select-size-model: calc(var(--font-size-base) + 5px);
+	--select-size-theme: calc(var(--font-size-base));
+
+	/* Layout & Spacing */
+	--chat-message-padding: 10px;
+	--chat-message-padding-x: 15px;
+	--footer-top-bottom-padding: 10px;
+	--chat-content-max-width: 768px;
+	--padding-header: 8px;
+	--padding-footer-file-preview: 5px;
+	--padding-button: 5px;
+	--padding-file-item: 2px 8px;
+	--margin-message-input: 8px 12px;
+	--gap-input-panel: 5px;
+	--gap-file-preview: 5px;
+
+	/* UI Elements */
+	--scrollbar-size: 10px;
+	--scrollbar-size-pre: 5px;
+	--button-size: 26px;
+	--scroll-button-size: 32px;
+	--scroll-button-margin: 20px;
+	--button-border-radius: 4px;
+	--button-margin: 0;
+
+	/* Transitions */
+	--button-transition: background-color 0s ease, opacity 0s ease, visibility 0s ease;
+
+	/* dialog styles mapping */
+	--dialog-font-family: var(--font-family);
+	--dialog-font-size: var(--font-size-base);
+	--dialog-line-height: var(--line-height-base);
+	--dialog-bg: var(--background-color);
+	--dialog-text: var(--text-color);
+	--dialog-input-border: var(--border-color);
+	--dialog-input-border-focus: var(--background-color-header);
+	--dialog-button-bg: var(--background-color-header);
+	--dialog-button-text: var(--text-color-header);
+	--dlalog-submit-bg: var(--background-color-header);
+	--dlalog-submit-text: var(--text-color-header);
+	--dialog-cancel-bg: var(--background-color-button-white);
+	--dialog-cancel-text: var(--text-color-button-white);
+	--dialog-border-color: var(--border-color);
+
+}
+
+/* Theme and Display Controls */
+[data-dark="off"] .dark-icon,
+[data-stream="off"] #stream-on-icon {
+	display: none;
+}
+
+[data-dark="on"] .light-icon,
+[data-stream="on"] #stream-off-icon {
+	display: none;
+}
+
+/* ==================== */
+/* Base Styles          */
+/* ==================== */
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	-webkit-tap-highlight-color: transparent;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+html,
+body {
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+}
+
+body {
+	font-family: var(--font-family);
+	background-color: var(--background-color);
+	display: flex;
+	flex-direction: column;
+	color: var(--text-color);
+	height: 100%;
+}
+
+body:not([data-theme]) {
+	display: none;
+}
+
+body.loading {
+	display: none;
+}
+
+html,
+body,
+input,
+button,
+button svg>*,
+select,
+select option,
+textarea {
+	font-size: var(--font-size-base);
+}
+
+a {
+	color: var(--text-color);
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a[href^="http"]::before {
+	content: "⧉";
+	margin-right: 0.3em;
+	display: inline-block;
+	font-size: 0.9em;
+	text-decoration: none;
+}
+
+.relative {
+	position: relative;
+}
+
+/* Hide the dropdown arrow for select elements */
+select.no-arrow-removed {
+	appearance: none;
+	/* Remove default arrow */
+	-webkit-appearance: none;
+	/* For Safari */
+	-moz-appearance: none;
+	/* For Firefox */
+	background: none;
+	/* Remove background */
+	display: none;
+}
+
+/* ==================== */
+/* Icon Styles          */
+/* ==================== */
+.icon-svg {
+	width: 100%;
+	height: 100%;
+	fill: none;
+	stroke: currentColor;
+	stroke-width: 2;
+	stroke-linecap: round;
+	stroke-linejoin: round;
+}
+
+.icon-svg.filled {
+	fill: currentColor;
+}
+
+.icon-svg.thin-stroke {
+	stroke-width: 1;
+}
+
+.icon-svg.thick-stroke {
+	stroke-width: 3;
+}
+
+/* ==================== */
+/* Header Styles        */
+/* ==================== */
+
+/* Hide mobile elements by default */
+#header-toggle-input,
+#header-toggle-label,
+#header-menu,
+#header-overlay {
+	display: none;
+}
+
+#header {
+	flex: 0 0 auto;
+	padding: var(--padding-header);
+	background-color: var(--background-color-header);
+	color: var(--text-color-header);
+	margin: 0;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	position: sticky;
+	top: 0;
+	left: 0;
+	width: 100%;
+	z-index: 1000;
+	line-height: var(--line-height-heading);
+}
+
+#header-left {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--padding-header);
+}
+
+#header select {
+	font-family: var(--font-family);
+	background-color: transparent;
+	color: var(--text-color-header);
+	border: none;
+	cursor: pointer;
+	font-weight: bold;
+}
+
+#header select:focus {
+	outline: none;
+}
+
+#header select option {
+	background-color: var(--background-color-header);
+	color: var(--text-color-header);
+}
+
+#header-left select {
+	font-size: var(--font-size-header);
+}
+
+#header-left #model-select {
+	text-transform: inherit;
+	max-width: 400px;
+}
+
+#header-right {
+	margin-left: auto;
+	display: flex;
+	align-items: center;
+	gap: var(--padding-header);
+	white-space: nowrap;
+}
+
+#header-right select {
+	font-size: var(--font-size-base);
+}
+
+#header-right #theme-select {
+	text-transform: capitalize;
+}
+
+#header-right #theme-select:focus {
+	outline: none;
+}
+
+#header-left #provider-select {
+	font-size: var(--select-size-provider);
+}
+
+#header-left #model-select {
+	text-overflow: ellipsis;
+	font-size: var(--select-size-model);
+	text-transform: inherit;
+}
+
+#header-right #theme-select {
+	font-size: var(--select-size-theme);
+}
+
+/* ==================== */
+/* Chat Content Styles  */
+/* ==================== */
+
+#chat-content {
+	flex: 1 1 auto;
+	height: 0;
+	min-height: 0;
+	overflow-y: scroll;
+	position: relative;
+	width: 100%;
+	padding: 0;
+	padding-left: calc((100% - var(--chat-content-max-width)) / 2);
+	padding-right: calc((100% - var(--chat-content-max-width)) / 2 - var(--scrollbar-size));
+	margin-bottom: -1px;
+}
+
+#chat-content:empty:before {
+	content: 'AiChat';
+	font-family: var(--font-family);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100%;
+	width: 100%;
+	opacity: .1;
+	font-size: var(--font-size-title);
+	font-weight: 700;
+}
+
+/* Message Styles */
+.message {
+	margin: 0;
+	top: 0px;
+	padding: var(--chat-message-padding) var(--chat-message-padding-x);
+	word-wrap: break-word;
+	position: relative;
+	width: 100%;
+	max-width: 100%;
+	border: 1px solid var(--border-color);
+	border-top: none;
+	line-height: var(--line-height-base);
+	overflow: hidden;
+}
+
+
+.assistant-message {
+	background-color: var(--background-color-message-assistant);
+}
+
+.user-message {
+	background-color: var(--background-color);
+	-overflow: auto;
+
+	overflow: hidden;
+	max-height: 130px;
+
+	-border-left-color: var(--background-color-header);
+}
+
+.user-message.expanded {
+	max-height: none;
+}
+
+.user-message::before {
+	content: '➜';
+	display: inline-block;
+	padding-right: var(--chat-message-padding);
+	color: var(--background-color-header);
+	margin-left: calc(-1*var(--chat-message-padding)/2);
+}
+
+.user-message::after {
+	content: '';
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	height: 10px;
+	background: linear-gradient(to top, var(--background-color) 0%, transparent 100%);
+}
+
+.error-message {
+	font-weight: 600;
+	color: var(--text-color-message-error);
+}
+
+.message:empty {
+	display: block;
+}
+
+.message:empty:before {
+	content: '';
+	font-weight: 600;
+	letter-spacing: 2px;
+	animation: ellipsis 1.5s steps(6) infinite;
+}
+
+/* ===================== */
+/* Footer and Input Area */
+/* ===================== */
+#footer {
+	position: relative;
+	padding: var(--footer-top-bottom-padding) max(var(--footer-top-bottom-padding), calc((100% - var(--chat-content-max-width)) / 2));
+	background-color: var(--background-color-footer);
+	border-top: 1px solid transparent;
+	border-image: linear-gradient(to right, transparent, var(--border-color) 10%, var(--border-color) 90%, transparent) 1;
+
+	bottom: 0;
+	left: 0;
+	right: 0;
+	width: 100%;
+	z-index: 1000;
+	display: flex;
+	flex-direction: column;
+	gap: var(--footer-top-bottom-padding);
+}
+
+#input-wrapper {
+	position: relative;
+	width: 80%;
+	border-radius: var(--button-border-radius);
+	background-color: var(--background-color);
+	border: 2px solid var(--border-color);
+	margin: auto;
+}
+
+#input-wrapper:focus-within {
+	border-color: var(--background-color-header);
+	-box-shadow: 0 0 0 4px var(--focus-ring);
+}
+
+#message-input-wrapper {
+	margin: var(--margin-message-input);
+}
+
+#message-input {
+	border: none;
+	background: none;
+	margin: 0;
+	padding: 0;
+	resize: none;
+	color: var(--text-color);
+	font-family: inherit;
+	outline: 0;
+	line-height: var(--line-height-input);
+	display: block;
+	width: 100%;
+}
+
+#message-input::placeholder {
+	color: var(--text-color-placeholder);
+}
+
+/* ==================== */
+/* Input Controls       */
+/* ==================== */
+#input-panel {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	width: 100%;
+	padding: var(--gap-input-panel);
+	padding-top: 0;
+	gap: var(--gap-input-panel);
+}
+
+#input-panel span {
+	display: flex;
+	align-items: center;
+	padding: 0 10px;
+	font-size: var(--font-size-smaller);
+}
+
+#input-panel-left {
+	display: flex;
+	align-items: stretch;
+	gap: var(--gap-input-panel);
+}
+
+#input-panel-right {
+	display: flex;
+	align-items: stretch;
+	gap: var(--gap-input-panel);
+	align-self: end;
+}
+
+#input-panel #app-info,
+#input-panel #app-info>* {
+	color: var(--text-color-placeholder);
+}
+
+#input-panel #app-info {
+	padding: 0;
+}
+
+#input-panel #session-info-span {
+	font-family: var(--font-family-code);
+}
+
+/* ==================== */
+/* Buttons and Interactive Elements */
+/* ==================== */
+button {
+	border: 1px solid transparent;
+	border-radius: var(--button-border-radius);
+	cursor: pointer;
+	font-weight: 600;
+	white-space: nowrap;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	transition: var(--button-transition);
+	color: var(--text-button);
+	background-color: var(--background-color-header);
+}
+
+button:hover {
+	background-color: var(--background-color-header-hover);
+}
+
+button:disabled {
+	opacity: 0.5;
+	cursor: not-allowed;
+	transform: none !important;
+}
+
+button,
+button * {
+	font-family: var(--font-family);
+}
+
+button:has(svg) {
+	height: var(--button-size);
+	width: var(--button-size);
+	padding: var(--padding-button);
+	border: none;
+	border-radius: var(--button-border-radius);
+	margin-left: var(--button-margin);
+	text-transform: capitalize;
+	line-height: var(--line-height-heading);
+}
+
+button.red {
+	color: var(--text-color-button-red);
+	background-color: var(--background-color-button-red);
+}
+
+button.red:hover {
+	background-color: var(--background-color-button-red-hover);
+}
+
+button.white {
+	color: var(--text-color-button-white);
+	background-color: var(--background-color-button-white);
+}
+
+button.white>svg {
+	stroke: var(--text-color-button-white);
+}
+
+button.white:hover {
+	background-color: var(--background-color-button-white-hover);
+}
+
+/* ==================== */
+/* Scroll Button        */
+/* ==================== */
+
+.scroll-button {
+	background-color: var(--background-color-header);
+	position: absolute;
+	width: var(--scroll-button-size);
+	height: var(--scroll-button-size);
+	border-radius: 50%;
+	cursor: pointer;
+	opacity: 0.25;
+	font-size: var(--font-size-large);
+	padding: var(--padding-button);
+	z-index: 900;
+	right: calc(((100% - var(--chat-content-max-width)) / 2) - (var(--scroll-button-margin) + var(--scroll-button-size)));
+}
+
+.scroll-button svg {
+	padding: 2px;
+}
+
+.scroll-button.visible {
+	opacity: .5;
+}
+
+.scroll-button:hover.visible {
+	opacity: 1;
+}
+
+
+#scroll-button-bottom {
+	top: calc(-1 * (var(--scroll-button-size) + var(--scroll-button-margin)));
+}
+
+#scroll-button-next-message {
+	top: calc(-1 * (var(--scroll-button-size)*2 + var(--scroll-button-margin) + (var(--scroll-button-margin)/2.5)));
+}
+
+#scroll-button-previous-message {
+	top: calc(-1 * (var(--scroll-button-size)*3 + var(--scroll-button-margin) + (var(--scroll-button-margin)*2/2.5)));
+}
+
+#scroll-button-top {
+	top: calc(-1 * (var(--scroll-button-size)*4 + var(--scroll-button-margin) + (var(--scroll-button-margin)*3/2.5)));
+}
+
+/* ==================== */
+/* File Preview         */
+/* ==================== */
+
+#file-preview {
+	display: none;
+	flex-wrap: wrap;
+	gap: var(--gap-file-preview);
+	padding: var(--padding-file-item);
+	width: 100%;
+}
+
+#file-preview.has-files {
+	display: flex;
+	padding: 0;
+	word-break: break-all;
+}
+
+.file-preview-item {
+	display: block;
+	width: fit-content;
+	max-width: 150px;
+	padding: var(--padding-file-item);
+	background-color: var(--background-color-file-preview);
+	border: 0px solid var(--border-color);
+	border-radius: var(--button-border-radius);
+	color: var(--text-color);
+	font-size: var(--font-size-small);
+	line-height: var(--line-height-base);
+	cursor: pointer;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.file-preview-item:hover {
+	color: var(--text-color-file-remove);
+	background-color: var(--background-color-file-remove);
+	border-color: var(--background-color-file-remove);
+}
+
+/* ==================== */
+/* Code Block Styles    */
+/* ==================== */
+pre {
+	font-family: var(--font-family-code);
+	font-size: var(--font-size-code);
+	background-color: var(--background-color-code);
+	color: var(--text-color-code);
+	margin: 8px 0;
+	padding: 16px;
+	width: 100%;
+	overflow: hidden;
+	word-wrap: normal;
+	word-break: break-all;
+	white-space: pre-wrap;
+	position: relative;
+	tab-size: 2;
+	border-radius: var(--button-border-radius);
+}
+
+pre::-webkit-scrollbar {
+	width: var(--scrollbar-size-pre);
+	height: var(--scrollbar-size-pre);
+}
+
+pre::-webkit-scrollbar-track,
+pre::-webkit-scrollbar-corner {
+	background: var(--background-color-code);
+}
+
+pre[class="code-block"]:not([lang=""]) {
+	padding-top: 34px;
+}
+
+pre[class="code-block"]:not([lang=""]):before {
+	content: attr(lang);
+	position: absolute;
+	left: 10px;
+}
+
+.code-head {
+	display: flex;
+	/* Use flexbox for alignment */
+	justify-content: space-between;
+	/* Space between left and right elements */
+	align-items: center;
+	/* Vertically center the items */
+	padding: 0;
+	margin-bottom: 16px;
+	border-bottom: 1px solid var(--border-color);
+	/* Add a border */
+}
+
+.code-head-lang {
+	font-weight: bold;
+}
+
+.code-head-clip {
+	cursor: pointer;
+	font-size: smaller;
+	display: flex;
+	align-items: center;
+}
+
+.code-head-clip:hover {
+	opacity: 0.5;
+}
+
+.code-head-clip:active {
+	opacity: 1;
+}
+
+.code-head-clip:has(svg) {
+	color: var(--text-color-code);
+	position: absolute;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+	right: 10px;
+	top: 8px;
+	padding: 1px;
+	width: 20px;
+	height: 20px;
+	opacity: .2;
+	transition: var(--button-transition);
+	z-index: 1;
+}
+
+.code-head-clip:has(svg) svg {
+	width: 100%;
+	height: 100%;
+	display: block;
+}
+
+.code-head-clip:has(svg):hover {
+	opacity: .5;
+}
+
+.code-head-clip:has(svg):active {
+	opacity: 1;
+}
+
+#upload-progress {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	background-color: var(--background-color-header);
+	color: var(--text-color-header);
+	font-weight: bold;
+	padding: 20px;
+	border-radius: 8px;
+	box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+	z-index: 1000;
+	text-align: center;
+	display: none;
+	/* Hidden by default */
+}
+
+#upload-progress.visible {
+	display: block;
+	/* Show when visible class is added */
+}
+
+/* ==================== */
+/* Scrollbar Styles     */
+/* ==================== */
+::-webkit-scrollbar {
+	width: var(--scrollbar-size);
+	height: var(--scrollbar-size);
+}
+
+::-webkit-scrollbar-track {
+	background: var(--background-color);
+}
+
+::-webkit-scrollbar-thumb {
+	background: var(--border-color);
+}
+
+::-webkit-scrollbar-thumb:horizontal:hover,
+::-webkit-scrollbar-thumb:vertical:hover {
+	background: var(--background-color-header);
+}
+
+@-moz-document url-prefix() {
+	pre {
+		scrollbar-color: var(--background-color-header) var(--background-color-code);
+	}
+}
+
+/* ==================== */
+/* Animations           */
+/* ==================== */
+@keyframes ellipsis {
+	0% {
+		content: '•';
+	}
+
+	20% {
+		content: '••';
+	}
+
+	40% {
+		content: '•••';
+	}
+
+	60% {
+		content: '••••';
+	}
+
+	80% {
+		content: '•••••';
+	}
+
+	100% {
+		content: '•';
+	}
+}
+
+@keyframes copy-animation-success {
+	0% {
+		transform: scale(1);
+	}
+
+	50% {
+		transform: scale(1.2);
+	}
+
+	100% {
+		transform: scale(1);
+	}
+}
+
+@keyframes message-flash-animation {
+	0% {
+		border-right-color: initialColor;
+		border-left-color: initialColor;
+	}
+
+	50% {
+		border-right-color: var(--background-color-header);
+		border-left-color: var(--background-color-header);
+	}
+
+	100% {
+		border-right-color: initialColor;
+		border-left-color: initialColor;
+	}
+}
+
+/* Animation Classes */
+.copy-animation {
+	animation: copy-animation-success 0.5s ease-in-out;
+}
+
+.message-flash {
+	animation: message-flash-animation 0.5s;
+}
+
+/* ==================== */
+/* Utility Classes      */
+/* ==================== */
+.highlighted {
+	background-color: var(--background-color-code);
+	color: var(--text-color-code);
+	padding: 2px 5px;
+	padding-right: 6px;
+	border-radius: var(--button-border-radius);
+}
+
+/* Message Content Spacing */
+.message>pre:first-child {
+	margin-top: 4px;
+	background-color: var(--text-color);
+	width: 10px;
+	height: 1.1em;
+	margin-bottom: -0.11em;
+}

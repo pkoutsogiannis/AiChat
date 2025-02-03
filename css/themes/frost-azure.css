@@ -1,0 +1,90 @@
+/*
+ * Copyright 2025 Periklis Koutsogiannis
+ * 
+ * Licensed under the Apache License, Version 2.0
+ * 
+ * Original Project: AiChat
+ * Author: Periklis Koutsogiannis
+ */
+
+/* ==========================================================================
+  Theme Colors - Light Mode
+  ========================================================================== */
+:root[data-dark="off"] {
+   /* Backgrounds */
+   --background-color: #f8f9fa;
+   --background-color-footer: var(--background-color);
+   --background-color-message-assistant: #edf2f7;
+   --background-color-file-preview: #e2e8f0;
+   /* Text Colors */
+   --text-color: #2d3748;
+   --text-color-header: white;
+   --text-color-subtitle: #4a5568;
+   --text-color-placeholder: #718096;
+   /* Borders and Accents */
+   --border-color: #bbcde1;
+   --background-color-header: #4299e1;
+   --background-color-header-hover: #3182ce;
+   --background-color-header-animation: white;
+   --focus-ring: rgba(66, 153, 225, 0.15);
+   /* Error States */
+   --background-color-message-error: #fff5f5;
+   --text-color-message-error: #e53e3e;
+   /* Code Block */
+   --background-color-code: #dbe6f1;
+   --text-color-code: #1a202c;
+   /* File Upload */
+   --text-color-file-remove: white;
+   --background-color-file-remove: #f56565;
+   /* UI Elements */
+   --shadow-dropdown: rgba(0, 0, 0, 0.1);
+   --text-button: #ffffff;
+   --background-color-button-disabled: #edf2f7;
+   --text-color-button-red: #FFFFFF;
+   --background-color-button-red: #f56565;
+   --background-color-button-red-hover: #e53e3e;
+   --text-color-button-white: #2d3748;
+   --background-color-button-white: #edf2f7;
+   --background-color-button-white-hover: #e2e8f0;
+}
+
+/* ==========================================================================
+  Theme Colors - Dark Mode
+  ========================================================================== */
+:root[data-dark="on"] {
+   /* Backgrounds */
+   --background-color: #1a202c;
+   --background-color-footer: #171923;
+   --background-color-message-assistant: #2d3748;
+   --background-color-file-preview: #2d3748;
+   /* Text Colors */
+   --text-color: #f7fafc;
+   --text-color-header: white;
+   --text-color-subtitle: #cbd5e0;
+   --text-color-placeholder: #a0aec0;
+   /* Borders and Accents */
+   --border-color: #4a5568;
+   --background-color-header: #2b6cb0;
+   --background-color-header-hover: #4275b5;
+   --background-color-header-animation: white;
+   --focus-ring: rgba(66, 153, 225, 0.15);
+   /* Error States */
+   --background-color-message-error: #742a2a;
+   --text-color-message-error: #fc8181;
+   /* Code Block */
+   --background-color-code: #252d3d;
+   --text-color-code: #e2e8f0;
+   /* File Upload */
+   --text-color-file-remove: white;
+   --background-color-file-remove: #c53030;
+   /* UI Elements */
+   --shadow-dropdown: rgba(0, 0, 0, 0.3);
+   --text-button: #ffffff;
+   --background-color-button-disabled: #2d3748;
+   --text-color-button-red: #FFFFFF;
+   --background-color-button-red: #c53030;
+   --background-color-button-red-hover: #9b2c2c;
+   --text-color-button-white: #e2e8f0;
+   --background-color-button-white: #2d3748;
+   --background-color-button-white-hover: #4a5568;
+}

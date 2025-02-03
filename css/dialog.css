@@ -1,0 +1,349 @@
+/*
+ * Copyright 2025 Periklis Koutsogiannis
+ * Licensed under the Apache License, Version 2.0
+ * 
+ * Original Project: AiChat
+ * Author: Periklis Koutsogiannis
+ */
+
+:root {
+    /* Layout */
+    --dialog-padding: 16px;
+    --dialog-min-width: 400px;
+    --dialog-max-width: 90%;
+    --dialog-button-padding: 6px 10px;
+    --dialog-input-padding: 6px 8px;
+    --dialog-buttons-gap: var(--dialog-padding);
+    --dialog-content-margin: var(--dialog-padding);
+    --dialog-padding-border: var(--dialog-padding);
+    --dialog-border-size: 1px;
+    --dialog-input-margin: 0;
+    --dialog-border-radius: 4px;
+    --dialog-input-border-width: 2px;
+    --dialog-button-min-width: 80px;
+
+    /* Colors */
+    --dialog-overlay-bg: rgba(0, 0, 0, 0.3);
+    --dialog-bg: #ffffff;
+    --dialog-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    --dialog-border-color: #d4d4d4;
+    --dialog-text: #000000;
+    --dialog-input-border: #dddddd;
+    --dialog-input-border-focus: #007bff;
+    --dialog-button-bg: #007bff;
+    --dialog-button-text: #ffffff;
+    --dlalog-submit-bg: #0740db;
+    --dlalog-submit-text: #ffffff;
+    --dialog-cancel-bg: #ececec;
+    --dialog-cancel-text: #212529;
+
+    /* Typography */
+    --dialog-font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --dialog-font-size: 16px;
+    --dialog-line-height: 1.3;
+    --dialog-font-weight-button: 600;
+
+    /* Animation */
+    --dialog-transition-duration: 200ms;
+    --dialog-transition-timing: cubic-bezier(0.4, 0, 0.2, 1);
+    --dialog-initial-scale: 1;
+    --dialog-z-index: 2000;
+}
+
+
+.dialog:focus,
+.dialog-button:focus {
+    outline: none;
+}
+
+.dialog-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: var(--dialog-z-index);
+    transition: background-color var(--dialog-transition-duration) ease;
+}
+
+.dialog-overlay.dialog-show {
+    background: var(--dialog-overlay-bg);
+}
+
+.dialog {
+    background: var(--dialog-bg);
+    border-radius: var(--dialog-border-radius);
+    padding: var(--dialog-padding);
+    box-sizing: border-box;
+    min-width: var(--dialog-min-width);
+    max-width: var(--dialog-max-width);
+    box-shadow: var(--dialog-shadow);
+    transform: scale(var(--dialog-initial-scale));
+    opacity: 0;
+    transform-origin: center;
+    will-change: transform, opacity;
+    transition: opacity var(--dialog-transition-duration) var(--dialog-transition-timing);
+    position: relative;
+    transform: translateZ(0);
+    max-height: calc(100% - var(--dialog-padding) * 2);
+    min-height: 150px;
+    display: flex;
+    flex-direction: column;
+}
+
+.dialog-templates {
+    display: none;
+}
+
+.dialog,
+.dialog-button,
+.dialog button,
+.dialog input,
+.dialog select,
+.dialog textarea {
+    font-family: var(--dialog-font-family);
+    font-size: var(--dialog-font-size);
+}
+
+.dialog input,
+.dialog select,
+.dialog textarea {
+    box-sizing: border-box;
+}
+
+.dialog button,
+.dialog-button {
+    line-height: var(--dialog-line-height);
+}
+
+.dialog-overlay.dialog-show .dialog {
+    transform: scale(1);
+    opacity: 1;
+}
+
+.dialog-content {
+    flex: 1;
+    overflow-y: auto;
+    min-height: 0;
+}
+
+.dialog-title {
+    color: var(--dialog-text);
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-bottom: var(--dialog-content-margin);
+    cursor: grab;
+    user-select: none;
+}
+
+.dialog-title:empty {
+    display: none;
+}
+
+.dialog-title.dialog-spacer {
+    border-bottom: var(--dialog-border-size) solid color-mix(in srgb, var(--dialog-border-color) 50%, transparent);
+    padding-bottom: calc(var(--dialog-padding-border)/2);
+}
+
+
+.dialog textarea,
+.dialog input,
+.dialog select,
+.dialog-input {
+    border: var(--dialog-input-border-width) solid var(--dialog-input-border);
+    border-radius: var(--dialog-border-radius);
+    background: var(--dialog-bg);
+    color: var(--dialog-text);
+    font-family: var(--dialog-font-family);
+    font-size: var(--dialog-font-size);
+}
+
+.dialog input[type="text"],
+.dialog input[type="password"],
+.dialog input[type="email"],
+.dialog input[type="number"],
+.dialog textarea,
+.dialog select,
+.dialog-input {
+    padding: var(--dialog-input-padding);
+}
+
+
+.dialog input:focus,
+.dialog select:focus,
+.dialog textarea:focus,
+.dialog-input:focus {
+    outline: none;
+    border-color: var(--dialog-input-border-focus);
+}
+
+.dialog-buttons {
+    display: flex;
+    gap: var(--dialog-buttons-gap);
+    margin-top: var(--dialog-content-margin);
+}
+
+.dialog-buttons button:not(.dialog-left) {
+    margin-left: auto;
+}
+
+.dialog-buttons button:not(.dialog-left)~button:not(.dialog-left) {
+    margin-left: 0;
+}
+
+.dialog-buttons.dialog-spacer {
+    border-top: var(--dialog-border-size) solid var(--dialog-border-color);
+    padding-top: var(--dialog-padding-border);
+}
+
+.dialog .dialog-button {
+    padding: var(--dialog-button-padding);
+    border: none;
+    border-radius: var(--dialog-border-radius);
+    cursor: pointer;
+    font-weight: var(--dialog-font-weight-button);
+    min-width: var(--dialog-button-min-width);
+    background-color: var(--dialog-button-bg);
+    transition: none;
+    color: var(--dialog-button-text);
+    transform: translateZ(0);
+}
+
+.dialog .dialog-button,
+.dialog .dialog-buttons {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.dialog .dialog-button:hover {
+    background-color: var(--dialog-button-bg);
+    background-image: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)) !important;
+}
+
+.dialog .dialog-submit {
+    background-color: var(--dlalog-submit-bg);
+    color: var(--dlalog-submit-text);
+}
+
+.dialog .dialog-submit:hover {
+    background-color: var(--dlalog-submit-bg);
+}
+
+.dialog .dialog-cancel {
+    background-color: var(--dialog-cancel-bg);
+    color: var(--dialog-cancel-text);
+}
+
+.dialog .dialog-cancel:hover {
+    background-color: var(--dialog-cancel-bg);
+}
+
+.dialog-overlay.dialog-show .dialog-icon {
+    animation: iconPop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes iconPop {
+    0% {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.dialog-icon-success {
+    color: #2e7d32;
+    background: linear-gradient(135deg, #43a047, #2e7d32);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.dialog-icon-error {
+    color: #c62828;
+    background: linear-gradient(135deg, #e53935, #c62828);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.dialog-icon-warning {
+    color: #ef6c00;
+    background: linear-gradient(135deg, #fb8c00, #ef6c00);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.dialog-icon-info {
+    color: #1565c0;
+    background: linear-gradient(135deg, #1e88e5, #1565c0);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.dialog-icon-custom {
+    color: #424242;
+}
+
+.dialog-message {
+    flex: 1;
+    line-height: 1.6;
+    font-size: 1.05em;
+}
+
+/* Alert dialog styles */
+.dialog-alert-content {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 5px 0;
+}
+
+.dialog-icon {
+    font-size: 48px;
+    min-width: 48px;
+    height: 48px;
+    flex-shrink: 0;
+    filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.2));
+    transition: transform 0.2s ease;
+    line-height: 40px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.dialog-icon svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.dialog .dialog-loading-spinner {
+    width: 30px;
+    height: 30px;
+    border: 3px solid #f3f3f3;
+    border-top: 3px solid #3498db;
+    border-radius: 50%;
+    animation: dialog-animation-spin 1s linear infinite;
+    margin: 10px auto;
+}
+
+@keyframes dialog-animation-spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}

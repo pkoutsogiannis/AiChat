@@ -1,0 +1,234 @@
+/*
+ * Copyright 2025 Periklis Koutsogiannis
+ * 
+ * Licensed under the Apache License, Version 2.0
+ * 
+ * Original Project: AiChat
+ * Author: Periklis Koutsogiannis
+ */
+
+/**********************************
+Container
+**********************************/
+.markdown-content {}
+
+/**********************************
+Headings
+**********************************/
+.markdown-content h1,
+.markdown-content h2,
+.markdown-content h3,
+.markdown-content h4,
+.markdown-content h5,
+.markdown-content h6 {
+	line-height: 2em;
+}
+
+.markdown-content h1 code,
+.markdown-content h2 code,
+.markdown-content h3 code,
+.markdown-content h4 code,
+.markdown-content h5 code,
+.markdown-content h6 code {
+	font-size: inherit;
+}
+
+.markdown-content h1 {
+	font-size: calc(var(--font-size-base) + 4px) !important;
+}
+
+.markdown-content h2 {
+	font-size: calc(var(--font-size-base) + 3px) !important;
+}
+
+.markdown-content h3 {
+	font-size: calc(var(--font-size-base) + 2px) !important;
+}
+
+.markdown-content h4 {
+	font-size: calc(var(--font-size-base) + 1px) !important;
+}
+
+.markdown-content h5 {
+	font-size: calc(var(--font-size-base) + 1px) !important;
+}
+
+.markdown-content h6 {
+	font-size: calc(var(--font-size-base) + 1px) !important;
+}
+
+/**********************************
+Paragraphs
+**********************************/
+.markdown-content p {
+	margin-bottom: 0.8em;
+}
+
+.markdown-content p:last-child {
+	margin-bottom: 0em;
+}
+
+.markdown-content ul,
+.markdown-content ol,
+.markdown-content ul ul,
+.markdown-content ol ul,
+.markdown-content ul ol,
+.markdown-content ol ol {
+	list-style-position: outside;
+	margin: 0;
+	padding: 0;
+	padding-left: 2em;
+}
+
+/* Top-level lists get larger margins */
+.markdown-content ul,
+.markdown-content ol {
+	margin: 1em 0;
+}
+
+/* Nested lists get smaller margins */
+.markdown-content ul ul,
+.markdown-content ol ul,
+.markdown-content ul ol,
+.markdown-content ol ol {
+	margin: 0.5em 0;
+}
+
+/**********************************
+Blockquotes
+**********************************/
+.markdown-content blockquote {
+	border-left: 8px solid var(--border-color);
+	padding: 0.5em 1em;
+	margin: 1em 0;
+	background-color: var(--background-color-code);
+	color: var(--text-color-code);
+}
+
+/**********************************
+Code blocks & Inline code
+**********************************/
+.markdown-content code {
+	font-family: var(--font-family-code);
+	border-radius: 4px;
+}
+
+.markdown-content code:not(pre code) {
+	font-family: var(--font-family-base);
+	background-color: var(--background-color-code);
+	padding: 0.15em 0.3em;
+	border: 1px solid var(--border-color);
+	border-radius: 0px;
+	font-size: 100%;
+}
+
+.markdown-content hr {
+	border: none;
+	background-color: var(--border-color);
+	margin-bottom: 0.8em;
+	height: 1px;
+
+}
+
+.markdown-content a {
+	text-decoration: none;
+	color: inherit;
+}
+
+.markdown-content a[href^="http"]::before {
+	content: "⧉";
+	margin-right: 0.3em;
+	display: inline-block;
+	font-size: 0.9em;
+	text-decoration: none;
+}
+
+.markdown-content a:hover {
+	text-decoration: underline;
+}
+
+.markdown-content img {
+	max-width: 100%;
+	height: auto;
+	display: block;
+	margin: 1em 0;
+}
+
+/**********************************
+Tables
+**********************************/
+.markdown-content table {
+	width: 100%;
+	border-collapse: collapse;
+	margin: 1em 0;
+}
+
+.markdown-content th,
+.markdown-content td {
+	border: 1px solid var(--border-color);
+	padding: 0.5em 1em;
+	text-align: left;
+}
+
+.markdown-content th {
+	background-color: var(--background-color-code);
+	font-weight: bold;
+}
+
+/**********************************
+Footnotes
+**********************************/
+.markdown-content .footnote-ref {
+	vertical-align: baseline;
+}
+
+.markdown-content .footnotes {
+	font-size: 0.9em;
+	color: var(--text-color);
+}
+
+.markdown-content .footnotes ol {
+	padding-left: 2em;
+	margin: 0.5em 0;
+}
+
+.markdown-content .footnotes li {
+	margin-bottom: 0.5em;
+	line-height: 1.4;
+}
+
+.markdown-content .footnotes li:last-child {
+	margin-bottom: 0;
+}
+
+.markdown-content .footnote-backref {
+	font-size: 0.9em;
+	text-decoration: none;
+	margin-left: 0.3em;
+	color: inherit;
+}
+
+.markdown-content .footnote-backref:hover,
+.markdown-content .footnote-ref:hover {
+	text-decoration: underline;
+}
+
+/* Definition Lists */
+.markdown-content dl {
+	margin: 1em 0;
+}
+
+.markdown-content dt {
+	font-weight: 600;
+	margin-top: 1em;
+}
+
+.markdown-content dd {
+	margin-left: 2em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+}
+
+.markdown-content dd+dt {
+	margin-top: 1em;
+}
