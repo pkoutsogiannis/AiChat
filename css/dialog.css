@@ -1,0 +1,334 @@
+/*
+ * Copyright 2025 Periklis Koutsogiannis
+ * Licensed under the Apache License, Version 2.0
+ * 
+ * Original Project: AiChat
+ * Author: Periklis Koutsogiannis
+ */
+
+:root {
+    /* Layout */
+    --dialog-padding: 16px;
+    --dialog-min-width: 400px;
+    --dialog-max-width: 90%;
+    --dialog-button-padding: 6px 10px;
+    --dialog-input-padding: 6px 8px;
+    --dialog-buttons-gap: var(--dialog-padding);
+    --dialog-content-margin: var(--dialog-padding);
+    --dialog-padding-border: var(--dialog-padding);
+    --dialog-border-size: 1px;
+    --dialog-input-margin: 0;
+    --dialog-border-radius: 4px;
+    --dialog-input-border-width: 2px;
+    --dialog-button-min-width: 80px;
+
+    /* Colors */
+    --dialog-overlay-bg: rgba(0, 0, 0, 0.3);
+    --dialog-bg: #ffffff;
+    --dialog-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    --dialog-border-color: #d4d4d4;
+    --dialog-text: #000000;
+    --dialog-input-border: #dddddd;
+    --dialog-input-border-focus: #007bff;
+    --dialog-button-bg: #007bff;
+    --dialog-button-text: #ffffff;
+    --dlalog-submit-bg: #0740db;
+    --dlalog-submit-text: #ffffff;
+    --dialog-cancel-bg: #ececec;
+    --dialog-cancel-text: #212529;
+
+    /* Typography */
+    --dialog-font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --dialog-font-size: 16px;
+    --dialog-line-height: 1.3;
+    --dialog-font-weight-button: 600;
+
+    /* Animation */
+    --dialog-transition-duration: 200ms;
+    --dialog-transition-timing: cubic-bezier(0.4, 0, 0.2, 1);
+    --dialog-initial-scale: 1;
+    --dialog-z-index: 2000;
+}
+
+
+.dialog:focus,
+.dialog-button:focus {
+    outline: none;
+}
+
+.dialog-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: var(--dialog-z-index);
+    transition: background-color var(--dialog-transition-duration) ease;
+}
+
+.dialog-overlay.dialog-show {
+    background: var(--dialog-overlay-bg);
+}
+
+.dialog {
+    background: var(--dialog-bg);
+    border-radius: var(--dialog-border-radius);
+    padding: var(--dialog-padding);
+    box-sizing: border-box;
+    min-width: var(--dialog-min-width);
+    max-width: var(--dialog-max-width);
+    box-shadow: var(--dialog-shadow);
+    transform: scale(var(--dialog-initial-scale));
+    opacity: 0;
+    transform-origin: center;
+    will-change: transform, opacity;
+    transition: opacity var(--dialog-transition-duration) var(--dialog-transition-timing);
+    position: relative;
+    max-height: calc(100% - var(--dialog-padding) * 2);
+    min-height: 150px;
+    display: flex;
+    flex-direction: column;
+}
+
+.dialog-templates {
+    display: none;
+}
+
+.dialog,
+.dialog-button,
+.dialog button,
+.dialog input,
+.dialog select,
+.dialog textarea {
+    font-family: var(--dialog-font-family);
+    font-size: var(--dialog-font-size);
+    transform: translateZ(0);
+}
+
+.dialog input,
+.dialog select,
+.dialog textarea {
+    box-sizing: border-box;
+}
+
+.dialog button,
+.dialog-button {
+    line-height: var(--dialog-line-height);
+}
+
+.dialog-overlay.dialog-show .dialog {
+    transform: scale(1);
+    opacity: 1;
+}
+
+.dialog-content {
+    flex: 1;
+    overflow-y: auto;
+    min-height: 0;
+}
+
+.dialog-title {
+    color: var(--dialog-text);
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-bottom: var(--dialog-content-margin);
+    cursor: grab;
+    user-select: none;
+}
+
+.dialog-title:empty {
+    display: none;
+}
+
+.dialog-title.dialog-spacer {
+    border-bottom: var(--dialog-border-size) solid color-mix(in srgb, var(--dialog-border-color) 50%, transparent);
+    padding-bottom: calc(var(--dialog-padding-border)/2);
+}
+
+
+.dialog textarea,
+.dialog input,
+.dialog select,
+.dialog-input {
+    border: var(--dialog-input-border-width) solid var(--dialog-input-border);
+    border-radius: var(--dialog-border-radius);
+    background: var(--dialog-bg);
+    color: var(--dialog-text);
+    font-family: var(--dialog-font-family);
+    font-size: var(--dialog-font-size);
+}
+
+.dialog input[type="text"],
+.dialog input[type="password"],
+.dialog input[type="email"],
+.dialog input[type="number"],
+.dialog textarea,
+.dialog select,
+.dialog-input {
+    padding: var(--dialog-input-padding);
+}
+
+
+.dialog input:focus,
+.dialog select:focus,
+.dialog textarea:focus,
+.dialog-input:focus {
+    outline: none;
+    border-color: var(--dialog-input-border-focus);
+}
+
+.dialog-buttons {
+    display: flex;
+    gap: var(--dialog-buttons-gap);
+    margin-top: var(--dialog-content-margin);
+}
+
+.dialog-buttons button:not(.dialog-left) {
+    margin-left: auto;
+}
+
+.dialog-buttons button:not(.dialog-left)~button:not(.dialog-left) {
+    margin-left: 0;
+}
+
+.dialog-buttons.dialog-spacer {
+    border-top: var(--dialog-border-size) solid var(--dialog-border-color);
+    padding-top: var(--dialog-padding-border);
+}
+
+.dialog .dialog-button {
+    padding: var(--dialog-button-padding);
+    border: none;
+    border-radius: var(--dialog-border-radius);
+    cursor: pointer;
+    font-weight: var(--dialog-font-weight-button);
+    min-width: var(--dialog-button-min-width);
+    background-color: var(--dialog-button-bg);
+    transition: none;
+    color: var(--dialog-button-text);
+}
+
+.dialog .dialog-button,
+.dialog .dialog-buttons {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.dialog .dialog-button:hover {
+    background-color: var(--dialog-button-bg);
+    background-image: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)) !important;
+}
+
+.dialog .dialog-submit {
+    background-color: var(--dlalog-submit-bg);
+    color: var(--dlalog-submit-text);
+}
+
+.dialog .dialog-submit:hover {
+    background-color: var(--dlalog-submit-bg);
+}
+
+.dialog .dialog-cancel {
+    background-color: var(--dialog-cancel-bg);
+    color: var(--dialog-cancel-text);
+}
+
+.dialog .dialog-cancel:hover {
+    background-color: var(--dialog-cancel-bg);
+}
+
+.dialog-overlay.dialog-show .dialog-icon {
+    animation: iconPop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes iconPop {
+    0% {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.dialog-alert-content {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 5px 0;
+}
+
+.dialog-icon {
+    width: 48px;
+    height: 48px;
+    display: block;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 48px;
+}
+
+/* Add this for custom icons */
+.dialog-icon-custom {
+    background-image: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #424242;
+}
+
+.dialog-icon-custom svg,
+.dialog-icon-custom img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.dialog-icon-success {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%232e7d32' d='M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z'/%3E%3C/svg%3E");
+}
+
+.dialog-icon-error {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23c62828' d='M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z'/%3E%3C/svg%3E");
+}
+
+.dialog-icon-warning {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23ef6c00' d='M12 5.99L19.53 19H4.47L12 5.99M12 2L1 21h22L12 2zm1 14h-2v2h2v-2zm0-6h-2v4h2v-4z'/%3E%3C/svg%3E");
+}
+
+.dialog-icon-info {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%231565c0' d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z'/%3E%3C/svg%3E");
+}
+
+.dialog-message {
+    flex: 1;
+    line-height: 1.6;
+    font-size: 1.05em;
+}
+
+.dialog .dialog-loading-spinner {
+    width: 30px;
+    height: 30px;
+    border: 3px solid #f3f3f3;
+    border-top: 3px solid #3498db;
+    border-radius: 50%;
+    animation: dialog-animation-spin 1s linear infinite;
+    margin: 10px auto;
+}
+
+@keyframes dialog-animation-spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}

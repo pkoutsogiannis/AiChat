@@ -1,0 +1,161 @@
+/*
+ * Copyright 2025 Periklis Koutsogiannis
+ * 
+ * Licensed under the Apache License, Version 2.0
+ * 
+ * Original Project: AiChat
+ * Author: Periklis Koutsogiannis (VS)
+ */
+
+:root {
+  --prism-background-color: var(--background-color-code);
+  --prism-text-color: var(--text-color-code);
+}
+
+/* Dark Theme - Visual Studio Dark */
+:root[data-dark="on"] {
+  --syntax-comment: #57A64A;
+  /* Green for comments */
+  --syntax-punctuation: #D4D4D4;
+  /* Light gray for punctuation */
+  --syntax-tag: #569CD6;
+  /* Blue for tags and properties */
+  --syntax-number: #B5CEA8;
+  /* Light green for numbers and booleans */
+  --syntax-string: #D69D85;
+  /* Orange for strings */
+  --syntax-operator: #D4D4D4;
+  /* Light gray for operators */
+  --syntax-keyword: #569CD6;
+  /* Blue for keywords */
+  --syntax-function: #DCDCAA;
+  /* Light yellow for functions */
+  --syntax-regex: #D16969;
+  /* Red for regex and variables */
+}
+
+/* Light Theme - Visual Studio Light */
+:root[data-dark="off"] {
+  --syntax-comment: #008000;
+  /* Green for comments */
+  --syntax-punctuation: #000000;
+  /* Black for punctuation */
+  --syntax-tag: #0000FF;
+  /* Blue for tags */
+  --syntax-number: #098658;
+  /* Green for numbers */
+  --syntax-string: #A31515;
+  /* Red for strings */
+  --syntax-operator: #000000;
+  /* Black for operators */
+  --syntax-keyword: #0000FF;
+  /* Blue for keywords */
+  --syntax-function: #795E26;
+  /* Brown for functions */
+  --syntax-regex: #A31515;
+  /* Red for regex */
+}
+
+/* Shared Styles */
+code[class*="language-"],
+span[class*="language-"],
+pre[class*="language-"] {
+  font-family: var(--font-family-code) !important;
+  color: var(--prism-text-color);
+  background: var(--prism-background-color);
+  text-shadow: 0 0 1px rgba(0, 0, 0, 0.1);
+  line-height: var(--line-height-code);
+  text-align: left;
+  hyphens: none;
+  tab-size: 4;
+}
+
+:not(pre)>code[class*="language-"],
+pre[class*="language-"] {
+  background: var(--prism-background-color);
+}
+
+/* Token styles */
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+  color: var(--syntax-comment);
+  font-style: italic;
+}
+
+.token.punctuation {
+  color: var(--syntax-punctuation);
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+  color: var(--syntax-tag);
+}
+
+.token.boolean,
+.token.number {
+  color: var(--syntax-number);
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+  color: var(--syntax-string);
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string {
+  color: var(--syntax-operator);
+}
+
+.token.atrule,
+.token.attr-value,
+.token.keyword {
+  color: var(--syntax-keyword);
+}
+
+.token.function,
+.token.class-name {
+  color: var(--syntax-function);
+}
+
+.token.regex,
+.token.important,
+.token.variable {
+  color: var(--syntax-regex);
+}
+
+/* Additional features */
+.token.important,
+.token.bold {
+  font-weight: bold;
+}
+
+.token.italic {
+  font-style: italic;
+}
+
+/* Selection highlight */
+code[class*="language-"]::-moz-selection,
+code[class*="language-"] ::-moz-selection,
+pre[class*="language-"]::-moz-selection,
+pre[class*="language-"] ::-moz-selection {
+  background: rgba(29, 78, 216, 0.15);
+}
+
+code[class*="language-"]::selection,
+code[class*="language-"] ::selection,
+pre[class*="language-"]::selection,
+pre[class*="language-"] ::selection {
+  background: rgba(29, 78, 216, 0.15);
+}

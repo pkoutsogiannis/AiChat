@@ -1,0 +1,225 @@
+/*
+ * Copyright 2025 Periklis Koutsogiannis
+ *
+ * Licensed under the Apache License, Version 2.0
+ * 
+ * Original Project: AiChat
+ * Author: Periklis Koutsogiannis
+ */
+
+@media screen and (max-width: 500px) {
+
+	:root {
+		/* Typography */
+		--font-size-base: 16px;
+		--line-height-base: 1.6em;
+
+		/* Layout & Spacing */
+		--padding-footer-file-preview: 8px;
+		--padding-file-item: 8px 12px;
+		--gap-file-preview: 8px;
+		--padding-header: 15px;
+		--padding-button: 8px;
+		--gap-input-panel: 8px;
+
+		/* UI Elements */
+		--scrollbar-size: 0px;
+		--scrollbar-size-pre: 0px;
+		--button-size: 38px;
+		--scroll-button-size: 44px;
+		--scroll-button-margin: 18px;
+		--button-border-radius: 6px;
+		--margin-message-input: 10px 15px;
+	}
+
+	#input-wrapper {
+		width: 100%;
+	}
+
+	#input-wrapper:focus-within {
+		box-shadow: none;
+		/*border-color: var(--border-color);*/
+	}
+
+	#footer {
+		border-color: var(--border-color);
+		border-image: none;
+	}
+}
+
+@media screen and (max-width: 840px) {
+
+	:root {
+		/* Layout & Spacing */
+		--padding-header: 12px;
+
+		/* UI Elements */
+		--menu-max-width: 90%;
+		--toggle-button-size: var(--scroll-button-size);
+		--toggle-button-margin: var(--padding-header);
+		--transition-timing-menu: .3s;
+		--toggle-button-margin: var(--padding-header);
+		--toggle-button-padding: var(--padding-button);
+		--mobile-menu-transition: left var(--transition-timing-menu) ease;
+	}
+
+	/* Overlay styles */
+	#header-overlay {
+		display: block;
+		visibility: hidden;
+		opacity: 0;
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background-color: var(--background-color-header);
+		z-index: 1999;
+		cursor: pointer;
+		transition: opacity var(--transition-timing-menu) ease, visibility 0s linear var(--transition-timing-menu);
+	}
+
+	/* Hide checkbox but keep it accessible */
+	#header-toggle-input {
+		position: absolute;
+		opacity: 0;
+		pointer-events: none;
+	}
+
+	#header-toggle-label {
+		display: flex;
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: var(--toggle-button-size);
+		height: var(--toggle-button-size);
+		padding: var(--toggle-button-padding);
+		background-color: var(--background-color-header);
+		color: var(--text-color-header);
+		border: none;
+		border-radius: var(--button-border-radius);
+		align-items: center;
+		justify-content: center;
+		z-index: 2001;
+		margin: var(--toggle-button-margin);
+		opacity: 0.5;
+		cursor: pointer;
+		transition: opacity var(--transition-timing-menu) ease;
+	}
+
+	/* actions when menu opens: */
+	#header-toggle-input:checked~#header-toggle-label {
+		opacity: 1;
+		background-color: var(--background-color-header);
+		color: var(--text-color-header);
+	}
+
+	/* Hide scroll buttons */
+	#header-toggle-input:checked~#header .scroll-button.visible,
+	#header-toggle-input:checked~#footer .scroll-button.visible {
+		-display: none;
+	}
+
+	/* Show overlay */
+	#header-toggle-input:checked~#header-overlay {
+		opacity: 0.5;
+		visibility: visible;
+		transition: opacity var(--transition-timing-menu) ease, visibility 0s linear;
+	}
+
+	/* Show header */
+	#header-toggle-input:checked~#header {
+		left: 0;
+	}
+
+	/* Content adjustments */
+	#header {
+		position: fixed;
+		top: 0;
+		left: -100%;
+		height: 100%;
+		width: var(--menu-width);
+		max-width: var(--menu-max-width);
+		flex-direction: column;
+		justify-content: space-between;
+		/* This will push #header-right to the bottom */
+		align-items: flex-start;
+		gap: var(--padding-header);
+		padding: var(--padding-header);
+		z-index: 2000;
+		margin: 0;
+		display: flex;
+		transition: var(--mobile-menu-transition);
+		padding-top: calc(var(--toggle-button-size) + var(--toggle-button-margin) + var(--padding-header));
+	}
+
+	#header-menu {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: var(--padding-header);
+		width: 100%;
+
+	}
+
+	#header-left {
+		flex-direction: column;
+		align-items: flex-start;
+		gap: var(--padding-header);
+		width: 100%;
+	}
+
+	#header-left select {
+		border-bottom: 1px solid;
+		padding-bottom: 5px;
+		border-bottom-style: dotted;
+		margin-bottom: 10px;
+		font-size: var(--font-size-header);
+	}
+
+
+	#header-menu,
+	#header-left,
+	#header-left select {
+		width: 100%;
+	}
+
+	/* Typography adjustments */
+	#header-left #provider-select {
+		font-size: var(--select-size-provider);
+	}
+
+	#header-right {
+		width: 100%;
+		gap: var(--padding-header);
+		justify-content: flex-end;
+		margin-left: 0;
+		margin-top: auto;
+		/* This will push #header-right to the bottom */
+	}
+
+	#theme-select {
+		margin-right: auto;
+		text-align: left;
+	}
+
+	.message {}
+
+	.user-message {
+		max-height: none;
+		border-left-color: var(--border-color);
+	}
+
+	/* Content width adjustment */
+	#chat-content {
+		padding-left: 0;
+		padding-right: 0;
+	}
+
+}
+
+@media screen and (max-width: 913px) {
+	.scroll-button {
+		right: var(--scroll-button-margin);
+	}
+}
